@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'
 import { auth, db } from '@/firebase/config'
 import { doc, getDoc } from 'firebase/firestore'
@@ -99,7 +99,6 @@ const styles = {
 
 export default function SignInPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -115,11 +114,14 @@ export default function SignInPage() {
 
   // Check for success message from sign-up
   useEffect(() => {
-    const message = searchParams.get('message')
+    // useSearchParams can require suspense boundaries in some Next.js versions during prerender.
+    // Using window.location here is safe because this is a client component ('use client')
+    const params = new URLSearchParams(window.location.search);
+    const message = params.get('message');
     if (message) {
       setSuccessMessage(message)
     }
-  }, [searchParams])
+  }, [])
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault()

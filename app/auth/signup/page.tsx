@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from 'firebase/auth'
 import { auth, db } from '@/firebase/config'
 import { doc, setDoc } from 'firebase/firestore'
@@ -117,13 +117,13 @@ const styles = {
 
 export default function SignUpPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const initialRole = (typeof window !== 'undefined') ? new URLSearchParams(window.location.search).get('role') || 'donor' : 'donor'
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    role: searchParams.get('role') || 'donor',
+    role: initialRole,
     phone: '',
     address: '',
     adminCode: ''

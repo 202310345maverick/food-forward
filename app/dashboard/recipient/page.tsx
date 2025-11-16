@@ -297,8 +297,8 @@ export default function RecipientDashboard() {
         ...prev,
         recipientName: userProfile.displayName || '',
         recipientEmail: user?.email || '',
-        recipientLocation: userProfile.location || '',
-        organizationName: userProfile.organization || ''
+        recipientLocation: (userProfile as any).location || '',
+        organizationName: (userProfile as any).organization || ''
       }));
     }
   }, [userProfile, isClaimModalOpen, user]);
@@ -475,10 +475,10 @@ export default function RecipientDashboard() {
       const claimDocData = {
         donorId: donation.donorId,
         recipientId: user.uid,
-        recipientName: userProfile.displayName,
-        recipientEmail: user.email,
-        recipientLocation: userProfile.location || '',
-        organizationName: userProfile.organization || '',
+  recipientName: userProfile.displayName,
+  recipientEmail: user.email,
+  recipientLocation: (userProfile as any).location || '',
+  organizationName: (userProfile as any).organization || '',
         intendedUse: 'quick_claim',
         estimatedBeneficiaries: '1',
         notes: 'Quick claim via recipient dashboard'

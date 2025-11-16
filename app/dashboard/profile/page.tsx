@@ -313,7 +313,7 @@ export default function ProfilePage() {
             const donationsSnapshot = await getDocs(donationsQuery);
             const donations = donationsSnapshot.docs.map(doc => ({
               id: doc.id,
-              ...doc.data()
+              ...(doc.data() as any)
             }));
 
             stats.totalDonations = donations.length;
@@ -338,7 +338,7 @@ export default function ProfilePage() {
             const receivedSnapshot = await getDocs(receivedQuery);
             const receivedDonations = receivedSnapshot.docs.map(doc => ({
               id: doc.id,
-              ...doc.data()
+              ...(doc.data() as any)
             }));
 
             stats.totalReceived = receivedDonations.filter(d => 
@@ -362,7 +362,7 @@ export default function ProfilePage() {
             const tasksSnapshot = await getDocs(tasksQuery);
             const tasks = tasksSnapshot.docs.map(doc => ({
               id: doc.id,
-              ...doc.data()
+              ...(doc.data() as any)
             }));
 
             stats.totalDeliveries = tasks.filter(t => 
